@@ -9,19 +9,18 @@ public class StudentService {
     
     public Student getStudentById(int id)
     {
-        Student student = new Student(1, "mahendra");
-        return student;
+        return null;
     }
-    public void addStudent(Student student)
+    public Student addStudent(Student student)
     {
-        return;
+        return student;
     }
     public void deleteStudentById(int id)
     {
         return;
     }
-    public Student putStudent(Student student)
+    public Student putStudent(Student student,int id)
     {
-        return null;
+        return student;
     }
 }

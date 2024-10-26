@@ -1,6 +1,8 @@
 package com.example.CRUDoperations.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,25 +19,34 @@ public class StudentController {
     @Autowired
     StudentService studentService;
     @GetMapping("/student/{id}")
-    public Student getStudentById(@PathVariable int id)
+    public ResponseEntity<Student> getStudentById(@PathVariable int id)
     {
         Student student = studentService.getStudentById(id);
-        return student;
+        if(student==null)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else 
+        {
+            return new ResponseEntity<>(student,HttpStatus.OK);
+        }
     }
     @PostMapping("student")
-    public void addStudent(@RequestBody Student student)
+    public ResponseEntity<Student> addStudent(@RequestBody Student student)
     {
-        studentService.addStudent(student);
+        Student newStudent = studentService.addStudent(student);
+        return new ResponseEntity<>(newStudent,HttpStatus.CREATED);
     }
     @DeleteMapping("student/{id}")
-    public void deleteStudent(@PathVariable int id)
+    public ResponseEntity<Void> deleteStudent(@PathVariable int id)
     {
         studentService.deleteStudentById(id);
-        return;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @PutMapping("student")
-    public Student putStudent(@RequestBody Student student)
+    @PutMapping("student/{id}")
+    public ResponseEntity<Student> putStudent(@RequestBody Student student, @PathVariable("id") int id)
     {
-        return studentService.putStudent(student);
+        
+        Student newStudent = studentService.putStudent(student, id);
+        return new ResponseEntity<>(newStudent,HttpStatus.NO_CONTENT);
     }
 }
