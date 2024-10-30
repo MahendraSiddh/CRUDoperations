@@ -11,9 +11,8 @@ import java.util.Optional;
 @Service
 public class StudentService {
     
-    @Autowired
+    @Autowired      
     private StudentRepository studentRepository;
-
     public Student getStudentById(int id)
     {
         Optional<Student> optionalStudent = this.studentRepository.findById(id);
